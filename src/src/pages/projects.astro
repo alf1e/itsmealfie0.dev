@@ -2,14 +2,15 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import jQuery from '../layouts/jQuery.astro';
 
-const PROJECTS = fetch("https://api.github.com/users/alf1e/repos")
-    .then((response) => response.json())
 import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
+
+
 ---
 
-<!DOCTYPE html>
-<html lang="en">
+<jQuery>
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
@@ -17,7 +18,21 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 		<Header title={SITE_TITLE} />
 		<main>
 			<h1>Projects</h1>
+			<div class="projectList">
+				<script>
+					const PROJECTS = fetch("https://api.github.com/users/alf1e/repos")
+						.then((response) => response.json())
+						.then((data) => {
+							var list;
+							list = $('<ul role="list" class="link-card-grid">');
+							for (var i = 0; i < data.length; i++) {
+								list.append("<ProjectCard projectName=" + data["full_name"] + "projectUrl=" + data["html_url"] + "projectDescription=" + data["description"] + ">");
+								$('projectList').append(list);
+						}
+						});
+				</script>
+			</div>
 		</main>
 		<Footer />
 	</body>
-</html>
+</jQuery>
