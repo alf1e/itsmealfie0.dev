@@ -18,7 +18,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 		<Header title={SITE_TITLE} />
 		<main>
 			<h1>Projects</h1>
-			<div class="projectList">
+			<div id="projectList">
 				<script>
 					const PROJECTS = fetch("https://api.github.com/users/alf1e/repos")
 						.then((response) => response.json())
@@ -27,7 +27,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 							list = $('<ul role="list" class="link-card-grid">');
 							for (var i = 0; i < data.length; i++) {
 								list.append("<ProjectCard projectName=" + data["full_name"] + "projectUrl=" + data["html_url"] + "projectDescription=" + data["description"] + ">");
-								$('projectList').append(list);
+								document.getElementById("projectList").innerHTML = null;
 						}
 						});
 				</script>
